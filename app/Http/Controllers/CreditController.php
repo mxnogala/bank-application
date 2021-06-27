@@ -65,9 +65,9 @@ class CreditController extends Controller
         return response(['data' => new CreditResource($credit)], 200);
     }
 
-    public function showAll($accontId)
+    public function showAll($accountId)
     {
-        $account = Account::findOrFail($id);
+        $account = Account::findOrFail($accountId);
         return response(['data' => CreditResource::collection($account->credits)], 200);
     }
 
