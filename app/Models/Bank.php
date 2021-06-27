@@ -10,6 +10,7 @@ use App\Model\Account;
 class Bank extends Model
 {
     use HasFactory;
+    protected $fillable=['name'];
 
     public function admins()
     {

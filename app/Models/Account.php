@@ -14,6 +14,8 @@ class Account extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id', 'bank_id', 'account_number', 'login', 'password', 'pin', 'balance'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -48,4 +50,5 @@ class Account extends Model
     {
         return $this->hasMany(Credit::class);
     }
+
 }
