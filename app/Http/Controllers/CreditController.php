@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Resources\CreditResource;
 use App\Models\Account;
+use App\Models\Credit;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
@@ -61,13 +62,17 @@ class CreditController extends Controller
      */
     public function show($accountId, $creditId)
     {
-        $credit = Credit::findOrFail($creditId);
-        return response(['data' => new CreditResource($credit)], 200);
+		$credit = Credit::findOrFail($creditId);
+		if($credit->account_id != $accountId){
+			return response(["message"=>"Credit doesn't match this user"], 400);
+		}
+		return response(['data' => new CreditResource($credit)], 200);
+
     }
 
-    public function showAll($accontId)
+    public function showAll($accountId)
     {
-        $account = Account::findOrFail($id);
+        $account = Account::findOrFail($accountId);
         return response(['data' => CreditResource::collection($account->credits)], 200);
     }
 

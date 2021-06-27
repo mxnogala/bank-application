@@ -30,3 +30,4 @@ Route::apiResource('credits', CreditController::class);
 Route::post('accounts/{account_id}/credits', [CreditController::class, 'store']);
 Route::get('accounts/{account_id}/credits', [CreditController::class, 'showAll']);
 Route::get('accounts/{account_id}/credits/{credit_id}', [CreditController::class, 'show']);
+Route::get('accounts/{account_id}/bank', [BankController::class, 'show']);

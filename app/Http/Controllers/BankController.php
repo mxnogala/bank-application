@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Resource\BankResource;
+use App\Http\Resources\BankResource;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Bank; 
+use App\Models\Account;
 
 class BankController extends Controller
 {
@@ -50,9 +51,13 @@ class BankController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($accountId)
     {
-        return response(['data' => new BankResource($bank)], 200);
+		$bank = Bank::findOrFail($accountId);
+		if($bank->id != $accountId){
+			return response(["message"=>"Bank doesn't match this user"], 400);
+		}
+		return response(['data' => new BankResource($bank)], 200);
     }
 
     /**
@@ -73,10 +78,10 @@ class BankController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $bankId)
     {
-        $bank->update($request->all());
-        return response(['data' => new BankResource($bank)], 200);
+        $bankId->update($request->all());
+        return response(['data' => new BankResource($bankId)], 200);
     }
 
     /**

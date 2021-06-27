@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Credit;
-use App\Http\Resource\AccountResource;
+use App\Http\Resources\AccountResource;
+use App\Models\Account;
 
 class AccountController extends Controller
 {
