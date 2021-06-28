@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\CreditResource;
-use App\Model\Transfers;
+use App\Http\Resources\TransferResource;
+use App\Models\Transfer;
+use App\Models\Account;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class TransferController extends Controller
 {
@@ -17,8 +20,8 @@ class TransferController extends Controller
      */
     public function index()
     {
-        $transfers = Transfers::all();
-        return response(['data' => Transfer::collection($transfers)], 200);
+        $transfers = Transfer::all();
+        return response(['data' => TransferResource::collection($transfers)], 200);
     }
 
     /**
@@ -37,7 +40,7 @@ class TransferController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($transferId, Request $request)
+    public function store(Request $request)
     {
 /*
         $validator = Validator::make($request->all(), [
@@ -49,6 +52,37 @@ class TransferController extends Controller
 
         return response(['data'=> new Transfer()])
         */
+		
+		$data = $request->all();
+		$toAccount = $data['account_number'];
+		$toAccount = Account::where('account_number', '=', $toAccount)->get();
+		$toAccountId = $toAccount->first()->id;
+
+		
+		$currenUserId = Auth::user()->id;
+
+        
+        $fromAccount = Account::findOrFail($currenUserId);
+		$toAccount = Account::findOrFail($toAccountId);
+
+
+		$fromAccount->setCurrentBalance($currenUserId,$data['amount'],1);
+		$toAccount->setCurrentBalance($toAccountId,$data['amount'],0);
+
+		$toRow = [
+			'sender_id'=>$currenUserId,
+			'receiver_id'=>$toAccountId,
+			'receiver_data'=>"$toAccount->first_name $toAccount->last_name",
+			'receiver_address'=>$data['receiver_address'],
+			'title'=>$data['title'],
+			'amount'=>$data['amount'],
+			'transfer_date'=>$data['transfer_date'],
+			'created_at'=>Carbon::now(),
+			'updated_at'=>Carbon::now(),
+		];
+
+        Transfer::create($toRow);
+		return response(['message'=>"Transfer created successfuly!"],201);
     }
 
     /**
@@ -65,8 +99,7 @@ class TransferController extends Controller
 
     public function showAll($accountId)
     {
-        $account = Account::findOrFail($accountId);
-        return response(['transfers' => TransferResource::collection($account->transfers)], 200);
+		//
     }
 
     /**
@@ -102,4 +135,9 @@ class TransferController extends Controller
     {
         //
     }
+	
+    public function showUserTransfers($accountId){
+		$transfers = Transfer::findForAccount($accountId);
+		return response(['data'=>TransferResource::collection($transfers)],200);
+	}
 }

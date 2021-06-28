@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('login')->unique();
             $table->string('password');
             $table->string('pin');
+            $table->boolean('is_admin');
             $table->timestamps();
         });
     }

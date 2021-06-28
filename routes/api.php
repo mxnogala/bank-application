@@ -24,12 +24,14 @@ Route::middleware('auth:api')->get('/account', function (Request $request) {
     return $request->account();
 });
 
-Route::apiResource('banks', BankController::class);
-Route::apiResource('accounts', AccountController::class)->middleware('auth:account');
-Route::apiResource('users', UserController::class);
-Route::apiResource('credits', CreditController::class)->middleware('auth:account');
-Route::post('accounts/{account_id}/credits', [CreditController::class, 'store']);
-Route::get('accounts/{account_id}/credits', [CreditController::class, 'showAll']);
-Route::get('accounts/{account_id}/credits/{credit_id}', [CreditController::class, 'show']);
-Route::get('accounts/{account_id}/bank', [BankController::class, 'show']);
-Route::post('login', [UserController::class, 'login']); 
+Route::apiResource('banks', BankController::class)->middleware('auth:api');
+Route::apiResource('accounts', AccountController::class)->middleware('auth:api');
+Route::apiResource('users', UserController::class)->middleware('auth:api');
+Route::apiResource('credits', CreditController::class)->middleware('auth:api');
+Route::apiResource('transfers', TransferController::class)->middleware('auth:api');
+Route::post('accounts/{account_id}/credits', [CreditController::class, 'store'])->middleware('auth:api');
+Route::get('accounts/{account_id}/credits', [CreditController::class, 'showAll'])->middleware('auth:api');
+Route::get('accounts/{account_id}/credits/{credit_id}', [CreditController::class, 'show'])->middleware('auth:api');
+Route::get('accounts/{account_id}/bank', [BankController::class, 'show'])->middleware('auth:api');
+Route::post('login', [UserController::class, 'login']);
+Route::get('accounts/{account_id}/transfers', [TransferController::class, 'showUserTransfers'])->middleware('auth:api');

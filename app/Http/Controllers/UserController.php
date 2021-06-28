@@ -49,9 +49,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        return response(['data'=> new UserResource($user),200]);
     }
 
     /**
@@ -72,9 +72,20 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $userId)
     {
-        //
+		$user = User::findOrFail($userId);
+		$data = $request->all();
+
+		if(array_key_exists('password', $data)){
+			$data['password'] = Hash::make($data['password']);
+		}
+		else if (array_key_exists('pin', $data)){
+			$data['pin'] = Hash::make($data['pin']);
+		}
+		
+		$user->update($data);
+		return response(['message' => 'Data has been updated'], 200);
     }
 
     /**
@@ -110,10 +121,10 @@ class UserController extends Controller
         if (Auth::attempt(['login' => $request->login, 'password' => $request->password])) {
             $user = Auth::user();
             $token = $user->createToken('bankToken')->accessToken;
-            return response(['token'=>$token, 'user_id'=>$user->id, 'message' => 'You are logged'], 200); 
+            return response(['token'=>$token, 'user_id'=>$user->id, 'message' => 'You are logged!'], 200); 
         }
         else {
-            return response(['error' => 'Authorisation error'], 400);
+            return response(['message' => 'Incorrect login or password'], 400);
         }
     }
  

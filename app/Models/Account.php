@@ -54,4 +54,18 @@ class Account extends Model {
         return $this->hasMany(Credit::class);
     }
 
+	public function setCurrentBalance($id,$amount,$type){
+        $account = Account::find($id);
+        $currentBalance = 0;
+        if($type === 1){
+            $currentBalance = floatval($account->balance) - floatval($amount);
+        }else{
+            $currentBalance = floatval($account->balance) + floatval($amount);
+        }
+
+        $account->balance = $currentBalance;
+        $account->save();
+        return $currentBalance;
+    }
+
 }

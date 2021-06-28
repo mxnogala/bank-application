@@ -17,38 +17,44 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('users')->insert([
             'login' => '123456',
-            'password' => Hash::make('pass123'),
-            'pin' => Hash::make('1234')            
+            'password' => Hash::make('pass1234'),
+            'pin' => Hash::make('1234'),
+			'is_admin' => false          
         ]);
 
         DB::table('users')->insert([
             'login' => '543211',
-            'password' => Hash::make('pass123'),
-            'pin' => Hash::make('1234')
+            'password' => Hash::make('pass1234'),
+            'pin' => Hash::make('1234'),
+			'is_admin' => true       
         ]);
 
         DB::table('users')->insert([
             'login' => '732159',
-            'password' => Hash::make('pass123'),
-            'pin' => Hash::make('1234')
+            'password' => Hash::make('pass1234'),
+            'pin' => Hash::make('1234'),
+			'is_admin' => false       
         ]);
 
         DB::table('users')->insert([
             'login' => '423658',
-            'password' => Hash::make('pass123'),
-            'pin' => Hash::make('1234')
+            'password' => Hash::make('pass1234'),
+            'pin' => Hash::make('1234'),
+			'is_admin' => true       
         ]);
 
         DB::table('users')->insert([
             'login' => '647258',
-            'password' => Hash::make('pass123'),
-            'pin' => Hash::make('1234')
+            'password' => Hash::make('pass1234'),
+            'pin' => Hash::make('1234'),
+			'is_admin' => false       
         ]);
 
         DB::table('users')->insert([
             'login' => '967425',
-            'password' => Hash::make('pass123'),
-            'pin' => Hash::make('1234')
+            'password' => Hash::make('pass1234'),
+            'pin' => Hash::make('1234'),
+			'is_admin' => false       
         ]);
 
         DB::table('banks')->insert([
@@ -112,6 +118,42 @@ class DatabaseSeeder extends Seeder
             'final_instalment_date' => '2030-07-01',
             'minimal_instalment' => 1500,
             'remaining_funds' =>25000
+        ]);
+
+        DB::table('credits')->insert([
+            'account_id' => 2,
+            'debt' => 15000,
+            'next_instalment_date' => '2021-07-25',
+            'final_instalment_date' => '2030-09-25',
+            'minimal_instalment' => 1500,
+            'remaining_funds' =>9000
+        ]);
+
+        DB::table('credits')->insert([
+            'account_id' => 1,
+            'debt' => 30000,
+            'next_instalment_date' => '2021-07-01',
+            'final_instalment_date' => '2030-07-01',
+            'minimal_instalment' => 1500,
+            'remaining_funds' =>25000
+        ]);
+		
+        DB::table('credits')->insert([
+            'account_id' => 1,
+            'debt' => 100000,
+            'next_instalment_date' => '2021-07-01',
+            'final_instalment_date' => '2030-07-01',
+            'minimal_instalment' => 10000,
+            'remaining_funds' =>50000
+        ]);
+		
+        DB::table('credits')->insert([
+            'account_id' => 2,
+            'debt' => 5000,
+            'next_instalment_date' => '2021-10-01',
+            'final_instalment_date' => '2033-07-01',
+            'minimal_instalment' => 100,
+            'remaining_funds' =>1000
         ]);
 
         DB::table('transfers')->insert([
