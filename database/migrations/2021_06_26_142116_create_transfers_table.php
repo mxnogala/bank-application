@@ -14,10 +14,10 @@ class CreateTransfersTable extends Migration
     public function up()
     {
         Schema::create('transfers', function (Blueprint $table) {
-            $table->id();
-            $table->integer('sender_id')->unsigned()->index();
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('sender_id');
             $table->foreign('sender_id')->references('id')->on('accounts')->onDelete('cascade');
-            $table->integer('receiver_id')->unsigned()->index();
+            $table->unsignedBigInteger('receiver_id');
             $table->foreign('receiver_id')->references('id')->on('accounts')->onDelete('cascade');
             $table->string('receiver_data');
             $table->string('receiver_address');

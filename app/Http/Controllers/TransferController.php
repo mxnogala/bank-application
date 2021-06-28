@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Resources\CreditResource;
+use App\Model\Transfers;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class TransferController extends Controller
 {
@@ -13,7 +17,8 @@ class TransferController extends Controller
      */
     public function index()
     {
-        //
+        $transfers = Transfers::all();
+        return response(['data' => Transfer::collection($transfers)], 200);
     }
 
     /**
@@ -32,9 +37,18 @@ class TransferController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($transferId, Request $request)
     {
-        //
+/*
+        $validator = Validator::make($request->all(), [
+            'sender_id' => 'required', 
+            'receiver_id' => 'required',
+            'title' => 'required',
+            'amount' => 'required'
+        ]); 
+
+        return response(['data'=> new Transfer()])
+        */
     }
 
     /**
@@ -43,9 +57,16 @@ class TransferController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($transferId)
     {
-        //
+        $transfer = Transfer::findOrFail($transferId);
+        return response(['data' => new TransferResource($transfer)], 200);
+    }
+
+    public function showAll($accountId)
+    {
+        $account = Account::findOrFail($accountId);
+        return response(['transfers' => TransferResource::collection($account->transfers)], 200);
     }
 
     /**

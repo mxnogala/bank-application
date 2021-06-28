@@ -14,7 +14,7 @@ class CreateAdminsTable extends Migration
     public function up()
     {
         Schema::create('admins', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('bank_id');
             $table->foreign('bank_id')->references('id')->on('banks');
             $table->string('login')->unique();

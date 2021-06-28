@@ -20,15 +20,16 @@ use App\Http\Controllers\TransferController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:api')->get('/account', function (Request $request) {
+    return $request->account();
 });
 
 Route::apiResource('banks', BankController::class);
-Route::apiResource('accounts', AccountController::class);
-Route::apiResource('credits', CreditController::class);
+Route::apiResource('accounts', AccountController::class)->middleware('auth:account');
+Route::apiResource('users', UserController::class);
+Route::apiResource('credits', CreditController::class)->middleware('auth:account');
 Route::post('accounts/{account_id}/credits', [CreditController::class, 'store']);
 Route::get('accounts/{account_id}/credits', [CreditController::class, 'showAll']);
 Route::get('accounts/{account_id}/credits/{credit_id}', [CreditController::class, 'show']);
 Route::get('accounts/{account_id}/bank', [BankController::class, 'show']);
-//Route::get('accountss', [AccountController::class, 'index']);
+Route::post('login', [UserController::class, 'login']); 

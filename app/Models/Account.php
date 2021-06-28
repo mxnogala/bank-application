@@ -2,19 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\User;
 use App\Models\Bank;
 use App\Models\Contact;
 use App\Models\Transfer;
 use App\Models\Credit;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens; 
 
-class Account extends Model
-{
-    use HasFactory;
+class Account extends Model {
+    use HasFactory, HasApiTokens, Notifiable;
 
-    protected $fillable = ['user_id', 'bank_id', 'account_number', 'login', 'password', 'pin', 'balance'];
+    protected $fillable = ['user_id', 'bank_id', 'account_number', 'login', 'password', 'pin', 'balance',
+     'pesel', 'first_name', 'last_name', 'birth_date', 'zip_code', 'city', 'phone_number', 'email'];
+
 
     public function user()
     {
