@@ -59,6 +59,10 @@ class TransferController extends Controller
 		$toAccountId = $toAccount->first()->id;
 
 		
+		if($data['receiver_address'] == ""){
+			$data['receiver_address'] = "NULL";
+		}
+
 		$currenUserId = Auth::user()->id;
 
         

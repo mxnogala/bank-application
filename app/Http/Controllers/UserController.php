@@ -40,7 +40,19 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $newUser = [
+            'login'=>$data['login'],
+            'password'=> Hash::make($data['password']),
+            'pin'=>Hash::make($data['pin']),
+            'is_admin'=>false,
+		];
+
+        $user = User::create($newUser);
+
+
+        return response(['user' => new UserResource($user), 'message' => 'User created!'], 201);
     }
 
     /**
@@ -94,9 +106,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($userId)
     {
-        //
+		$user = User::findOrFail($userId);
+		$user->delete();
+		return response(['message' => 'User has been delete']);
     }
 
     public function registerUser(Request $request)

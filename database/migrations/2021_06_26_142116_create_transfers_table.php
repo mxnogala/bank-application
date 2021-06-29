@@ -22,7 +22,7 @@ class CreateTransfersTable extends Migration
             $table->string('receiver_data');
             $table->string('receiver_address');
             $table->string('title');
-            $table->unsignedInteger('amount');
+            $table->decimal('amount', $precision=20, $scale=2);
             $table->date('transfer_date');
             $table->timestamps();
         });

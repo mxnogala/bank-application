@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             'login' => '123456',
             'password' => Hash::make('pass1234'),
             'pin' => Hash::make('1234'),
-			'is_admin' => false          
+			'is_admin' => false  
         ]);
 
         DB::table('users')->insert([
@@ -68,7 +68,7 @@ class DatabaseSeeder extends Seeder
         DB::table('accounts')->insert([
             'user_id' => 1,
             'bank_id' =>1,
-            'account_number' => '1234 1234 1234 1234',
+            'account_number' => '1234123412341234',
             'balance' => 48993.45,
             'pesel'=>'99100404849',
             'first_name' => 'Jan',
@@ -85,8 +85,8 @@ class DatabaseSeeder extends Seeder
         DB::table('accounts')->insert([
             'user_id' => 2,
             'bank_id' =>2,
-            'account_number' => '4321 4321 4321 4321',
-            'balance' => 1652.22,
+            'account_number' => '4321432143214321',
+            'balance' => 165002.22,
             'pesel'=>'56987451236',
             'first_name' => 'Anna',
             'last_name' => 'Kowalska',
@@ -96,6 +96,38 @@ class DatabaseSeeder extends Seeder
             'city' => 'Gądki',
             'phone_number' => '987654321',
             'email' => 'annakowalskak@mail.pl'
+        ]);
+        
+        DB::table('accounts')->insert([
+            'user_id' => 3,
+            'bank_id' =>2,
+            'account_number' => '1234567891234567',
+            'balance' => 13645.98,
+            'pesel'=>'56981451236',
+            'first_name' => 'Przemysław',
+            'last_name' => 'Kot',
+            'birth_date' => '1999-08-21',
+            'address' => 'Jasna 11',
+            'zip_code' => '26-698',
+            'city' => 'Gądki',
+            'phone_number' => '987654329',
+            'email' => 'przemyslawkot@mail.pl'
+        ]);
+        
+        DB::table('accounts')->insert([
+            'user_id' => 4,
+            'bank_id' =>1,
+            'account_number' => '9234567891234567',
+            'balance' => 9999.22,
+            'pesel'=>'59987451236',
+            'first_name' => 'Joanna',
+            'last_name' => 'Kowalska',
+            'birth_date' => '1978-08-21',
+            'address' => 'Ciemna 14',
+            'zip_code' => '26-698',
+            'city' => 'Gądki',
+            'phone_number' => '987154321',
+            'email' => 'joannakowalska@mail.pl'
         ]);
 
 
